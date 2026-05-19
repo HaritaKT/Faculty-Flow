@@ -8,8 +8,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-// FIX: This import was missing — same issue as MainActivity.
-// ActivitySignupBinding couldn't resolve, cascading into errors on every binding.X call.
 import com.example.madecie3.databinding.ActivitySignupBinding
 import com.example.madecie3.faculty.FacultyHomeActivity
 import com.example.madecie3.student.FacultyDirectoryActivity
@@ -25,6 +23,9 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private var isStudent = true
+
+    // Hardcoded Faculty Access Code
+    private val FACULTY_ACCESS_CODE = "FACULTY2024"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +56,12 @@ class SignupActivity : AppCompatActivity() {
             binding.btnStudent.apply { setBackgroundResource(R.drawable.segmented_control_selected); setTypeface(null, Typeface.BOLD) }
             binding.btnFaculty.apply { background = null; setTypeface(null, Typeface.NORMAL) }
             binding.studentFieldsContainer.visibility = View.VISIBLE
+            binding.facultyFieldsContainer.visibility = View.GONE
         } else {
             binding.btnFaculty.apply { setBackgroundResource(R.drawable.segmented_control_selected); setTypeface(null, Typeface.BOLD) }
             binding.btnStudent.apply { background = null; setTypeface(null, Typeface.NORMAL) }
             binding.studentFieldsContainer.visibility = View.GONE
+            binding.facultyFieldsContainer.visibility = View.VISIBLE
         }
     }
 
@@ -94,6 +97,17 @@ class SignupActivity : AppCompatActivity() {
         if (isStudent) {
             if (binding.etDegree.text.isNullOrBlank())   { binding.tilDegree.error = "Degree is required";     isValid = false } else binding.tilDegree.error = null
             if (binding.etSemester.text.isNullOrBlank()) { binding.tilSemester.error = "Semester is required"; isValid = false } else binding.tilSemester.error = null
+        } else {
+            val accessCode = binding.etAccessCode.text.toString().trim()
+            if (accessCode.isEmpty()) {
+                binding.tilAccessCode.error = "Access code is required"
+                isValid = false
+            } else if (accessCode != FACULTY_ACCESS_CODE) {
+                binding.tilAccessCode.error = "Invalid Faculty Access Code"
+                isValid = false
+            } else {
+                binding.tilAccessCode.error = null
+            }
         }
         return isValid
     }
@@ -113,21 +127,29 @@ class SignupActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val userId   = auth.currentUser?.uid ?: ""
-                    val userData = mutableMapOf<String, Any>("uid" to userId, "name" to name, "email" to email, "userType" to userType)
-                    if (isStudent) {
-                        userData["degree"]   = binding.etDegree.text.toString()
-                        userData["semester"] = binding.etSemester.text.toString()
-                    }
-                    db.collection("users").document(userId).set(userData)
-                        .addOnSuccessListener {
-                            preferencesManager.userName  = name
-                            preferencesManager.userEmail = email
-                            preferencesManager.userType  = userType
-                            preferencesManager.isLoggedIn = true
-                            navigateToDashboard()
+                    val firebaseUser = auth.currentUser
+                    firebaseUser?.sendEmailVerification()
+                        ?.addOnCompleteListener { verificationTask ->
+                            if (verificationTask.isSuccessful) {
+                                val userId   = firebaseUser.uid
+                                val userData = mutableMapOf<String, Any>("uid" to userId, "name" to name, "email" to email, "userType" to userType)
+                                if (isStudent) {
+                                    userData["degree"]   = binding.etDegree.text.toString()
+                                    userData["semester"] = binding.etSemester.text.toString()
+                                }
+                                db.collection("users").document(userId).set(userData)
+                                    .addOnSuccessListener {
+                                        auth.signOut() // Force user to log in after verification
+                                        Toast.makeText(this, "Verification email sent. Please verify and login.", Toast.LENGTH_LONG).show()
+                                        startActivity(Intent(this, LoginActivity::class.java))
+                                        finish()
+                                    }
+                                    .addOnFailureListener { e -> resetButton(); Toast.makeText(this, "Error saving user: ${e.message}", Toast.LENGTH_SHORT).show() }
+                            } else {
+                                resetButton()
+                                Toast.makeText(this, "Failed to send verification email.", Toast.LENGTH_SHORT).show()
+                            }
                         }
-                        .addOnFailureListener { e -> resetButton(); Toast.makeText(this, "Error saving user: ${e.message}", Toast.LENGTH_SHORT).show() }
                 } else {
                     resetButton()
                     val msg = when {

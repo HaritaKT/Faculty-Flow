@@ -215,6 +215,35 @@
                                 android:inputType="none" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/facultyFieldsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ios_gray6" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilAccessCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:errorEnabled="true">
+                            <EditText
+                                android:id="@+id/etAccessCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:background="@android:color/transparent"
+                                android:hint="Faculty Access Code"
+                                android:textSize="17sp"
+                                android:textColor="@color/apple_label"
+                                android:textColorHint="@color/ios_gray"
+                                android:paddingVertical="16dp"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

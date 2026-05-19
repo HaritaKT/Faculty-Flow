@@ -110,6 +110,19 @@
                 app:backgroundTint="@color/ios_blue" />
 
             <TextView
+                android:id="@+id/tvResendVerification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="Resend verification email"
+                android:textColor="@color/ios_blue"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/tvSignupToggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

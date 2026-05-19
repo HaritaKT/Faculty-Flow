@@ -2,10 +2,9 @@ package com.example.madecie3
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-// FIX: Missing import for ViewBinding class. Without this, the compiler
-// cannot resolve ActivityLoginBinding on a clean build / after package rename.
 import com.example.madecie3.databinding.ActivityLoginBinding
 import com.example.madecie3.faculty.FacultyHomeActivity
 import com.example.madecie3.student.FacultyDirectoryActivity
@@ -55,6 +54,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SignupActivity::class.java))
             finish()
         }
+
+        binding.tvResendVerification.setOnClickListener {
+            resendVerificationEmail()
+        }
     }
 
     private fun performFirebaseLogin(email: String, password: String) {
@@ -64,29 +67,69 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val userId = auth.currentUser?.uid ?: ""
-                    db.collection("users").document(userId).get()
-                        .addOnSuccessListener { document ->
-                            if (document != null && document.exists()) {
-                                preferencesManager.userName  = document.getString("name") ?: ""
-                                preferencesManager.userEmail = email
-                                preferencesManager.userType  = document.getString("userType") ?: ""
-                                preferencesManager.isLoggedIn = true
-                                navigateToDashboard()
-                            } else {
-                                resetLoginButton()
-                                Toast.makeText(this, "User profile not found", Toast.LENGTH_SHORT).show()
+                    val user = auth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        val userId = user.uid
+                        db.collection("users").document(userId).get()
+                            .addOnSuccessListener { document ->
+                                if (document != null && document.exists()) {
+                                    preferencesManager.userName  = document.getString("name") ?: ""
+                                    preferencesManager.userEmail = email
+                                    preferencesManager.userType  = document.getString("userType") ?: ""
+                                    preferencesManager.isLoggedIn = true
+                                    navigateToDashboard()
+                                } else {
+                                    resetLoginButton()
+                                    Toast.makeText(this, "User profile not found", Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
-                        .addOnFailureListener { e ->
-                            resetLoginButton()
-                            Toast.makeText(this, "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
+                            .addOnFailureListener { e ->
+                                resetLoginButton()
+                                Toast.makeText(this, "Error fetching profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    } else {
+                        resetLoginButton()
+                        auth.signOut()
+                        binding.tvResendVerification.visibility = View.VISIBLE
+                        Toast.makeText(this, "Please verify your email before logging in.", Toast.LENGTH_LONG).show()
+                    }
                 } else {
                     resetLoginButton()
                     Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun resendVerificationEmail() {
+        val user = auth.currentUser
+        // Note: currentUser might be null if we signed out. 
+        // We might need to sign in again or use the email/password from fields to send it.
+        // Or, more simply, ask the user to sign in once, and if it fails due to verification, 
+        // the user object is still briefly available in the task result or we can re-auth.
+        
+        // Let's re-try sign in briefly to get the user object if it's null, or just use the current fields.
+        val email = binding.etEmail.text.toString().trim()
+        val password = binding.etPassword.text.toString().trim()
+        
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please enter email and password first.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { resendTask ->
+                    if (resendTask.isSuccessful) {
+                        Toast.makeText(this, "Verification email resent to $email", Toast.LENGTH_SHORT).show()
+                        auth.signOut()
+                    } else {
+                        Toast.makeText(this, "Failed to resend: ${resendTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun resetLoginButton() {
