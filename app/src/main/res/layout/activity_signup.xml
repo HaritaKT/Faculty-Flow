@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background_gradient"
+    android:fitsSystemWindows="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Create Account"
+                android:textColor="@color/apple_label"
+                android:textSize="32sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Join the FacultyFlow community"
+                android:textColor="@color/apple_secondary_label"
+                android:textSize="17sp"
+                android:layout_marginBottom="40dp" />
+
+            <!-- Apple Style Segmented Control -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/ios_gray6"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:id="@+id/btnStudent"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/segmented_control_selected"
+                        android:gravity="center"
+                        android:text="Student"
+                        android:textColor="@color/apple_label"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/btnFaculty"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Faculty"
+                        android:textColor="@color/apple_secondary_label"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardForm"
+                style="@style/AppleCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false"
+                        app:errorEnabled="true">
+                        <EditText
+                            android:id="@+id/etName"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Full Name"
+                            android:textSize="17sp"
+                            android:textColor="@color/apple_label"
+                            android:textColorHint="@color/ios_gray"
+                            android:paddingVertical="16dp"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ios_gray6" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false"
+                        app:errorEnabled="true">
+                        <EditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@android:color/transparent"
+                            android:hint="University Email (@rvu.edu.in)"
+                            android:textSize="17sp"
+                            android:textColor="@color/apple_label"
+                            android:textColorHint="@color/ios_gray"
+                            android:paddingVertical="16dp"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ios_gray6" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false"
+                        app:errorEnabled="true"
+                        app:passwordToggleEnabled="true">
+                        <EditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="@android:color/transparent"
+                            android:hint="Password (min 6 chars)"
+                            android:textSize="17sp"
+                            android:textColor="@color/apple_label"
+                            android:textColorHint="@color/ios_gray"
+                            android:paddingVertical="16dp"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/studentFieldsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ios_gray6" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilDegree"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:errorEnabled="true"
+                            app:boxBackgroundColor="@android:color/transparent"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp">
+                            <AutoCompleteTextView
+                                android:id="@+id/etDegree"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:hint="Degree Program"
+                                android:textSize="17sp"
+                                android:textColor="@color/apple_label"
+                                android:textColorHint="@color/ios_gray"
+                                android:paddingVertical="16dp"
+                                android:paddingStart="0dp"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/ios_gray6" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilSemester"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:errorEnabled="true"
+                            app:boxBackgroundColor="@android:color/transparent"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp">
+                            <AutoCompleteTextView
+                                android:id="@+id/etSemester"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:hint="Current Semester"
+                                android:textSize="17sp"
+                                android:textColor="@color/apple_label"
+                                android:textColorHint="@color/ios_gray"
+                                android:paddingVertical="16dp"
+                                android:paddingStart="0dp"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSignup"
+                style="@style/AppleButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Create Account"
+                app:backgroundTint="@color/ios_blue" />
+
+            <TextView
+                android:id="@+id/tvLoginToggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Already have an account? Sign In"
+                android:textColor="@color/ios_blue"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

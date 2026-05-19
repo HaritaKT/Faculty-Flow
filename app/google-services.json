@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1058455024282",
+    "project_id": "facultyflow-abfa6",
+    "storage_bucket": "facultyflow-abfa6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058455024282:android:3ff7e8495cc1d5c74e6523",
+        "android_client_info": {
+          "package_name": "com.example.facultyflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYWf6iFaeyjdlJ0lPwTZXFnl6BPRdacAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058455024282:android:431ca9ac3ff773124e6523",
+        "android_client_info": {
+          "package_name": "com.example.madecie3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYWf6iFaeyjdlJ0lPwTZXFnl6BPRdacAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

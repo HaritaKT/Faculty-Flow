@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background_gradient"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/apple_background"
+        app:elevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:paddingStart="8dp"
+            android:paddingEnd="16dp">
+
+            <ImageButton
+                android:id="@+id/ivBack"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="?selectableItemBackgroundBorderless"
+                app:tint="@color/ios_blue" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Timetable Upload"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:textColor="@color/apple_label" />
+        </RelativeLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Header Section -->
+            <TextView
+                android:id="@+id/tvHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Your Schedule"
+                style="@style/TextAppearance.App.TitleLarge"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvSubHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload your weekly timetable (PDF or Image) to sync your availability."
+                style="@style/TextAppearance.App.BodyMedium"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Initial State: Selection Area -->
+            <LinearLayout
+                android:id="@+id/selectionArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/uploadArea"
+                    style="@style/AppleCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/ios_gray6"
+                    app:cardBackgroundColor="@color/apple_card"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@android:drawable/ic_menu_upload"
+                            app:tint="@color/ios_blue"
+                            android:layout_marginBottom="16dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Document"
+                            android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                            android:textColor="@color/apple_label"
+                            android:textSize="17sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Images or PDF supported"
+                            android:textColor="@color/apple_tertiary_label"
+                            android:textSize="14sp"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cameraOption"
+                    style="@style/AppleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Use Camera"
+                    android:textColor="@color/apple_label"
+                    app:icon="@android:drawable/ic_menu_camera"
+                    app:iconTint="@color/apple_label"
+                    app:backgroundTint="@color/apple_card"
+                    app:strokeColor="@color/ios_gray6"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Loading State -->
+            <LinearLayout
+                android:id="@+id/progressArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="32dp"
+                android:gravity="center">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    app:indicatorSize="48dp"
+                    app:trackThickness="4dp"
+                    app:indicatorColor="@color/ios_blue" />
+
+                <TextView
+                    android:id="@+id/tvProgressText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AI is analyzing your timetable..."
+                    android:textColor="@color/apple_secondary_label"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp" />
+            </LinearLayout>
+
+            <!-- Results State -->
+            <LinearLayout
+                android:id="@+id/resultsArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Detected Busy Slots"
+                    android:textColor="@color/apple_label"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDetectedSlots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@android:layout/simple_list_item_2" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSaveSlots"
+                    style="@style/AppleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Sync to My Schedule"
+                    app:backgroundTint="@color/ios_blue"
+                    android:textColor="@android:color/white" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRetry"
+                    style="@style/AppleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Scan Another"
+                    android:textColor="@color/apple_label"
+                    app:backgroundTint="@color/apple_card"
+                    app:strokeColor="@color/ios_gray6"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Success State -->
+            <LinearLayout
+                android:id="@+id/successState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_marginTop="64dp">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/checkbox_on_background"
+                    app:tint="@color/ios_green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule Synced!"
+                    android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                    android:textColor="@color/apple_label"
+                    android:textSize="22sp"
+                    android:layout_marginTop="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Students can no longer book during these times."
+                    android:textColor="@color/apple_secondary_label"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background_gradient"
+    android:fitsSystemWindows="false">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="96dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp">
+
+            <!-- Header row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="28dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingEnd="12dp">
+
+                    <TextView
+                        android:id="@+id/tvGreeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Good Morning"
+                        android:textColor="@color/apple_tertiary_label"
+                        android:textSize="13sp"
+                        android:letterSpacing="0"
+                        android:textAllCaps="true"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvFacultyName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dr. John Smith"
+                        android:textColor="@color/apple_label"
+                        android:textSize="26sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/white" />
+
+            </LinearLayout>
+
+            <!-- Availability card -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/AppleCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="16dp">
+
+                    <View
+                        android:id="@+id/statusIndicator"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/circle_background"
+                        android:backgroundTint="@color/ios_green" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Availability Status"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        android:textColor="@color/apple_label"
+                        android:textSize="17sp" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchBusy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:thumbTint="@color/white"
+                        app:trackTint="@color/ios_green" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Stat cards row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:layout_marginBottom="28dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPendingBookings"
+                    style="@style/AppleCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/tvPendingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/ios_blue"
+                            android:textSize="32sp"
+                            android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Requests"
+                            android:textColor="@color/apple_secondary_label"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardScheduleOverview"
+                    style="@style/AppleCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/tvProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0%"
+                            android:textColor="@color/ios_purple"
+                            android:textSize="32sp"
+                            android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDayProgressLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Day Progress"
+                            android:textColor="@color/apple_secondary_label"
+                            android:textSize="13sp"
+                            android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Timeline title -->
+            <TextView
+                android:id="@+id/tvTimelineTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Today's Timeline"
+                android:textColor="@color/apple_label"
+                android:textSize="22sp"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Day filter chips -->
+            <HorizontalScrollView
+                android:id="@+id/dayChipScroller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_marginBottom="12dp">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupDays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    android:paddingVertical="2dp">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipMon"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mon"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        app:chipMinTouchTargetSize="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipTue"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tue"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        app:chipMinTouchTargetSize="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipWed"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wed"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        app:chipMinTouchTargetSize="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipThu"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thu"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        app:chipMinTouchTargetSize="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipFri"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fri"
+                        android:textSize="13sp"
+                        android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                        app:chipMinTouchTargetSize="0dp" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <!-- Schedule list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- Empty state -->
+            <LinearLayout
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="48dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:src="@android:drawable/ic_menu_today"
+                    app:tint="@color/ios_gray4"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="No classes" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No classes today"
+                    android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                    android:textColor="@color/apple_label"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload your timetable to get started"
+                    android:textColor="@color/apple_tertiary_label"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom nav -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNavCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/apple_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/navHome"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_menu_home"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Home"
+                app:tint="@color/ios_blue" />
+
+            <ImageButton
+                android:id="@+id/navTimetable"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_today"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Timetable"
+                app:tint="@color/ios_gray" />
+
+            <ImageButton
+                android:id="@+id/navBookings"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_menu_inbox"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Bookings"
+                app:tint="@color/ios_gray" />
+
+            <ImageButton
+                android:id="@+id/navProfile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="Profile"
+                app:tint="@color/ios_gray" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

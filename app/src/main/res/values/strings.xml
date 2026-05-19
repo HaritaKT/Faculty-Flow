@@ -1,0 +1,102 @@
+<resources>
+    <string name="app_name">FacultyFlow</string>
+    
+    <!-- Common -->
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="search">Search</string>
+    <string name="loading">Loading...</string>
+    <string name="no_data">No data available</string>
+    
+    <!-- Signup Screen -->
+    <string name="faculty_flow">FacultyFlow</string>
+    <string name="student">Student</string>
+    <string name="faculty">Faculty</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="degree">Degree</string>
+    <string name="semester">Semester</string>
+    <string name="section">Section</string>
+    <string name="signup">Sign Up</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="degree_hint">Select your degree</string>
+    <string name="semester_hint">Select semester</string>
+    <string name="section_hint">Enter section</string>
+    
+    <!-- Faculty Home -->
+    <string name="good_morning">Good Morning</string>
+    <string name="todays_schedule">Today\'s Schedule</string>
+    <string name="pending_bookings">Pending Bookings</string>
+    <string name="set_busy">Set Busy</string>
+    <string name="free">Free</string>
+    <string name="busy">Busy</string>
+    <string name="in_class">In Class</string>
+    
+    <!-- Timetable Upload -->
+    <string name="upload_timetable">Upload Timetable</string>
+    <string name="upload_instruction">Upload timetable to auto-set availability</string>
+    <string name="drag_drop">Drag &amp; Drop your timetable here</string>
+    <string name="or_camera">Or take a photo</string>
+    <string name="uploading">Uploading...</string>
+    <string name="scanning">Scanning timetable...</string>
+    
+    <!-- Booking Inbox -->
+    <string name="booking_requests">Booking Requests</string>
+    <string name="reply_hint">Type your reply...</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="no_bookings">No booking requests</string>
+    
+    <!-- Profile Editor -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="department">Department</string>
+    <string name="room_block">Room/Block</string>
+    <string name="office_hours">Office Hours</string>
+    <string name="change_photo">Change Photo</string>
+    
+    <!-- Faculty Directory -->
+    <string name="faculty_directory">Faculty Directory</string>
+    <string name="all_departments">All Departments</string>
+    <string name="computer_science">Computer Science</string>
+    <string name="electronics">Electronics</string>
+    <string name="mechanical">Mechanical</string>
+    <string name="civil">Civil</string>
+    <string name="no_faculty_available">No faculty available right now</string>
+    <string name="check_back_later">Check back after 10:00 AM</string>
+    
+    <!-- Faculty Profile -->
+    <string name="current_location">Current Location</string>
+    <string name="available_slots">Available Slots</string>
+    <string name="book_now">Book Now</string>
+    
+    <!-- Book Slot -->
+    <string name="select_time_slot">Select Time Slot</string>
+    <string name="add_note">Add a note (optional)</string>
+    <string name="note_hint">Maximum 150 characters</string>
+    <string name="confirm_booking">Confirm Booking</string>
+    <string name="no_slots_available">No slots available</string>
+    
+    <!-- My Bookings -->
+    <string name="my_bookings">My Bookings</string>
+    <string name="pending">Pending</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="done">Done</string>
+    <string name="no_bookings_yet">No bookings yet</string>
+    
+    <!-- Validation -->
+    <string name="required_field">This field is required</string>
+    <string name="invalid_email">Please enter a valid email</string>
+    <string name="email_format">Email must be in format xxx@rvu.edu.in</string>
+    
+    <!-- Status Messages -->
+    <string name="booking_successful">Booking successful!</string>
+    <string name="booking_failed">Booking failed. Please try again.</string>
+    <string name="profile_updated">Profile updated successfully!</string>
+    <string name="timetable_uploaded">Timetable uploaded successfully!</string>
+</resources>
