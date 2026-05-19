@@ -41,6 +41,8 @@ class BookSlotActivity : AppCompatActivity() {
     private var facultyName: String = ""
     private var facultyDesignation: String = ""
 
+    private var currentTimeSlots: List<TimeSlot> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -132,13 +134,33 @@ class BookSlotActivity : AppCompatActivity() {
     private fun setupTimeSlots() {
 
         timeSlotAdapter = TimeSlotAdapter { slot ->
-            selectTimeSlot(slot)
+            updateSelectedTimeSlot(slot)
         }
 
         binding.rvTimeSlots.apply {
             layoutManager = GridLayoutManager(this@BookSlotActivity, 3)
             adapter = timeSlotAdapter
         }
+    }
+
+    private fun updateSelectedTimeSlot(slot: TimeSlot) {
+        // Deselect previous
+        currentTimeSlots.forEach { it.isSelected = false }
+        
+        // Select new
+        val clickedSlot = currentTimeSlots.find { it.time == slot.time }
+        clickedSlot?.isSelected = true
+        
+        // Update adapter
+        timeSlotAdapter.notifyDataSetChanged()
+        
+        selectedTimeSlot = clickedSlot
+
+        binding.selectedTimeDisplay.visibility = View.VISIBLE
+        binding.tvSelectedTime.visibility = View.VISIBLE
+        binding.tvSelectedTime.text = "Slot selected: ${slot.time}"
+
+        binding.btnConfirmBooking.isEnabled = true
     }
 
     // 🔥 MAIN AI + FIREBASE FILTER
@@ -158,27 +180,28 @@ class BookSlotActivity : AppCompatActivity() {
 
                 val allSlots = generateTimeSlots()
 
-                val timeSlots = allSlots.map { slot ->
+                currentTimeSlots = allSlots.map { slot ->
                     TimeSlot(
                         time = slot,
                         duration = "30 min",
-                        isAvailable = !overlapsBusyRange(slot, busyRanges)
+                        isAvailable = !overlapsBusyRange(slot, busyRanges),
+                        isSelected = false
                     )
                 }
 
-                timeSlotAdapter.submitList(timeSlots)
+                timeSlotAdapter.submitList(currentTimeSlots)
                 binding.noSlotsState.visibility =
-                    if (timeSlots.none { it.isAvailable }) View.VISIBLE else View.GONE
+                    if (currentTimeSlots.none { it.isAvailable }) View.VISIBLE else View.GONE
 
                 val matchingPreselected = preselectedTime?.let { selected ->
-                    timeSlots.firstOrNull { it.time == selected && it.isAvailable }
+                    currentTimeSlots.firstOrNull { it.time == selected && it.isAvailable }
                 }
                 if (matchingPreselected != null) {
-                    selectTimeSlot(matchingPreselected)
+                    updateSelectedTimeSlot(matchingPreselected)
                     preselectedTime = null
                 }
 
-                if (timeSlots.none { it.isAvailable }) {
+                if (currentTimeSlots.none { it.isAvailable }) {
                     Toast.makeText(
                         this,
                         "No slots available (faculty busy)",
@@ -255,16 +278,6 @@ class BookSlotActivity : AppCompatActivity() {
         } catch (_: Exception) {
             null
         }
-    }
-
-    private fun selectTimeSlot(slot: TimeSlot) {
-        selectedTimeSlot = slot
-
-        binding.selectedTimeDisplay.visibility = View.VISIBLE
-        binding.tvSelectedTime.visibility = View.VISIBLE
-        binding.tvSelectedTime.text = "Slot selected: ${slot.time}"
-
-        binding.btnConfirmBooking.isEnabled = true
     }
 
     private fun setupClickListeners() {
