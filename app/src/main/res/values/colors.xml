@@ -32,6 +32,7 @@
     <color name="apple_secondary_label">#B4BBC8</color>
     <color name="apple_tertiary_label">#7F8A9C</color>
     <color name="apple_separator">#263044</color>
+    <color name="apple_secondary_system_background">#1C2533</color>
 
     <!-- Aliases for Premium Theme -->
     <color name="apple_blue">@color/ios_blue</color>

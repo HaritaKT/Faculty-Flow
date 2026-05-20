@@ -231,6 +231,16 @@
                 app:backgroundTint="@color/ios_blue" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewAppointments"
+                style="@style/AppleButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="View My Appointments"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/ios_blue" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDeleteAccount"
                 style="@style/AppleButton"
                 android:layout_width="match_parent"

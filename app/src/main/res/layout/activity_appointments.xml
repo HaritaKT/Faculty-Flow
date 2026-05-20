@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Requests"
+                android:text="My Appointments"
                 android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
                 android:textSize="17sp"
@@ -53,43 +53,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Booking Inbox"
+                android:text="Upcoming Appointments"
                 style="@style/TextAppearance.App.TitleLarge"
                 android:layout_marginBottom="24dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnViewAppointments"
-                    style="@style/AppleButton"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:text="Appointments"
-                    app:backgroundTint="@color/ios_blue"
-                    app:icon="@android:drawable/ic_menu_today"
-                    app:iconGravity="textStart" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnUploadTimetable"
-                    style="@style/AppleButton"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:text="Timetable"
-                    app:backgroundTint="@color/ios_blue"
-                    app:icon="@android:drawable/ic_menu_upload"
-                    app:iconGravity="textStart" />
-            </LinearLayout>
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvBookings"
+                android:id="@+id/rvAppointments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
@@ -106,14 +75,14 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_menu_inbox"
+                    android:src="@android:drawable/ic_menu_today"
                     app:tint="@color/ios_gray4"
                     android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Inbox Empty"
+                    android:text="No Appointments"
                     android:fontFamily="sans-serif-condensed"
                     android:textStyle="bold"
                     android:textColor="@color/apple_label"
@@ -122,7 +91,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="All requests cleared"
+                    android:text="Confirmed slots will appear here"
                     android:textColor="@color/apple_tertiary_label"
                     android:textSize="15sp" />
             </LinearLayout>

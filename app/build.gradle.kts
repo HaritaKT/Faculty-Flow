@@ -7,10 +7,17 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
-val localProperties = Properties().apply {
-    val file = rootProject.file("local.properties")
-    if (file.exists()) {
-        file.inputStream().use { this.load(it) }
+val envProperties = Properties().apply {
+    // Try to load from .env first
+    val envFile = rootProject.file(".env")
+    if (envFile.exists()) {
+        envFile.inputStream().use { this.load(it) }
+    } else {
+        // Fallback to local.properties if .env doesn't exist
+        val localFile = rootProject.file("local.properties")
+        if (localFile.exists()) {
+            localFile.inputStream().use { this.load(it) }
+        }
     }
 }
 
@@ -25,15 +32,16 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
         buildConfigField(
             "String",
             "GEMINI_API_KEY",
-            "\"${localProperties.getProperty("GEMINI_API_KEY", "")}\""
+            "\"${envProperties.getProperty("GEMINI_API_KEY", "")}\""
         )
         buildConfigField(
             "String",
             "IMGBB_API_KEY",
-            "\"${localProperties.getProperty("IMGBB_API_KEY", "")}\""
+            "\"${envProperties.getProperty("IMGBB_API_KEY", "")}\""
         )
     }
 

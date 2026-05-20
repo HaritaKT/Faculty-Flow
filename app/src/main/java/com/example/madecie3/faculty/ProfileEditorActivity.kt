@@ -120,8 +120,9 @@ class ProfileEditorActivity : androidx.appcompat.app.AppCompatActivity() {
     private fun uploadImageAndSaveProfile() {
         val uri = selectedImageUri ?: return
         val apiKey = BuildConfig.IMGBB_API_KEY
+
         if (apiKey.isBlank()) {
-            Toast.makeText(this, "Image upload API key missing", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Image upload API key missing in .env", Toast.LENGTH_LONG).show()
             return
         }
 

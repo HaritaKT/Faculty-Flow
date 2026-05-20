@@ -1,5 +1,6 @@
 package com.example.madecie3.faculty
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,6 @@ import com.google.firebase.firestore.Query
 
 // ✅ AI
 import com.example.madecie3.ai.SmartEngine
-import com.example.madecie3.ai.TimetableSlot
 
 class BookingInboxActivity : AppCompatActivity() {
 
@@ -54,6 +54,10 @@ class BookingInboxActivity : AppCompatActivity() {
 
         binding.btnUploadTimetable.setOnClickListener {
             pickTimetableFile()
+        }
+
+        binding.btnViewAppointments.setOnClickListener {
+            startActivity(Intent(this, AppointmentsActivity::class.java))
         }
     }
 

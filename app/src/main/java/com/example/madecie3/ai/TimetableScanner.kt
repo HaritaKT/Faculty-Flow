@@ -2,7 +2,6 @@ package com.example.madecie3.ai
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ImageDecoder
@@ -27,10 +26,6 @@ import java.net.URL
 object TimetableScanner {
 
     private const val TAG = "TimetableScanner"
-
-    // ── Paste your free Gemini API key here ──────────────────────────────────
-    // Get one free (no credit card) at: https://aistudio.google.com/apikey
-    // Free limits: 1,000 requests/day, 15 RPM — more than enough for a timetable app
     private const val GEMINI_MODEL = "gemini-flash-lite-latest"
 
     fun extractBusySlots(
@@ -62,13 +57,12 @@ object TimetableScanner {
         }
     }
 
-    // ── Gemini Vision call ────────────────────────────────────────────────────
-
     private fun callGeminiVision(context: Context, bitmap: Bitmap): List<TimetableSlot> {
         val apiKey = BuildConfig.GEMINI_API_KEY
+
         if (apiKey.isBlank()) {
             CoroutineScope(Dispatchers.Main).launch {
-                android.widget.Toast.makeText(context, "Gemini API key missing", android.widget.Toast.LENGTH_LONG).show()
+                android.widget.Toast.makeText(context, "Gemini API key missing in .env", android.widget.Toast.LENGTH_LONG).show()
             }
             return emptyList()
         }
@@ -99,23 +93,20 @@ Example of correct output:
 [{"day":"monday","time":"10:10 - 11:10","subject":"MADE","room":"N/A"},{"day":"monday","time":"11:10 - 12:10","subject":"Dynamics and Controls","room":"N/A"}]
 """.trimIndent()
 
-        // Gemini REST API endpoint
         val url = URL(
-            "https://generativelanguage.googleapis.com/v1beta/models/$GEMINI_MODEL:generateContent?key=$apiKey"
+            "https://generativelanguage.googleapis.com/v1beta/models/${'$'}GEMINI_MODEL:generateContent?key=${'$'}apiKey"
         )
 
         val requestBody = JSONObject().apply {
             put("contents", JSONArray().apply {
                 put(JSONObject().apply {
                     put("parts", JSONArray().apply {
-                        // Image part
                         put(JSONObject().apply {
                             put("inline_data", JSONObject().apply {
                                 put("mime_type", "image/jpeg")
                                 put("data", base64Image)
                             })
                         })
-                        // Text prompt part
                         put(JSONObject().apply {
                             put("text", prompt)
                         })
@@ -123,8 +114,8 @@ Example of correct output:
                 })
             })
             put("generationConfig", JSONObject().apply {
-                put("temperature", 0)          // deterministic — no hallucinations
-                put("maxOutputTokens", 2048)
+                put("temperature", 0)
+                put("maxOutputTokens", 8192)
                 put("responseMimeType", "application/json")
             })
         }
@@ -146,24 +137,19 @@ Example of correct output:
             conn.inputStream.bufferedReader().readText()
         } else {
             val err = conn.errorStream?.bufferedReader()?.readText() ?: "unknown error"
-            Log.e(TAG, "Gemini API error $responseCode: $err")
+            Log.e(TAG, "Gemini API error ${'$'}responseCode: ${'$'}err")
             CoroutineScope(Dispatchers.Main).launch {
-                android.widget.Toast.makeText(context, "API Error $responseCode: $err", android.widget.Toast.LENGTH_LONG).show()
+                android.widget.Toast.makeText(context, "API Error ${'$'}responseCode: ${'$'}err", android.widget.Toast.LENGTH_LONG).show()
             }
             return emptyList()
         }
 
-        Log.d(TAG, "Gemini raw response: $responseText")
         return parseGeminiResponse(responseText)
     }
-
-    // ── Parse Gemini response ─────────────────────────────────────────────────
 
     private fun parseGeminiResponse(responseText: String): List<TimetableSlot> {
         return try {
             val root = JSONObject(responseText)
-
-            // Navigate: candidates[0].content.parts[0].text
             val text = root
                 .getJSONArray("candidates")
                 .getJSONObject(0)
@@ -173,9 +159,6 @@ Example of correct output:
                 .getString("text")
                 .trim()
 
-            Log.d(TAG, "Gemini extracted text: $text")
-
-            // Strip any accidental markdown fences and conversational text
             val startIndex = text.indexOf('[')
             val endIndex = text.lastIndexOf(']')
             val jsonStr = if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
@@ -196,22 +179,17 @@ Example of correct output:
 
                 if (day.isEmpty() || time.isEmpty() || subject.isEmpty()) continue
 
-                // Safety: skip if Gemini accidentally included free/lunch
                 val subjectLower = subject.lowercase()
                 if (subjectLower == "free" || subjectLower.contains("lunch")) continue
 
                 slots.add(TimetableSlot(time = time, subject = subject, room = room, day = day))
-                Log.d(TAG, "Parsed slot: $day | $time | $subject")
             }
-
             slots
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to parse Gemini response: ${e.message}")
+            Log.e(TAG, "Failed to parse Gemini response: ${'$'}{e.message}")
             emptyList()
         }
     }
-
-    // ── Image utilities ───────────────────────────────────────────────────────
 
     private fun loadBitmaps(context: Context, uri: Uri): List<Bitmap> {
         val cr       = context.contentResolver
@@ -229,10 +207,6 @@ Example of correct output:
         }
     }
 
-    /**
-     * Compress and resize before sending — Gemini handles up to 20MB
-     * but smaller = faster response. Max 1568px on longest side.
-     */
     private fun bitmapToBase64(bitmap: Bitmap): String {
         val maxSide = 1568
         val scaled  = if (bitmap.width > maxSide || bitmap.height > maxSide) {
