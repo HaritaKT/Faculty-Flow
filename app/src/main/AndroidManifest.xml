@@ -59,6 +59,10 @@
             android:exported="false"
             android:theme="@style/Theme.FacultyFlow.NoActionBar" />
 
+        <activity android:name=".faculty.AppointmentsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FacultyFlow.NoActionBar" />
+
         <activity android:name=".student.FacultyDirectoryActivity"
             android:exported="false"
             android:theme="@style/Theme.FacultyFlow.NoActionBar" />

@@ -57,13 +57,36 @@
                 style="@style/TextAppearance.App.TitleLarge"
                 android:layout_marginBottom="24dp" />
 
-            <!-- 🔥 NEW BUTTON ADDED HERE -->
-            <Button
-                android:id="@+id/btnUploadTimetable"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Timetable"
-                android:layout_marginBottom="16dp" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewAppointments"
+                    style="@style/AppleButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="Appointments"
+                    app:backgroundTint="@color/ios_blue"
+                    app:icon="@android:drawable/ic_menu_today"
+                    app:iconGravity="textStart" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUploadTimetable"
+                    style="@style/AppleButton"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:text="Timetable"
+                    app:backgroundTint="@color/ios_blue"
+                    app:icon="@android:drawable/ic_menu_upload"
+                    app:iconGravity="textStart" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvBookings"
@@ -92,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="Inbox Empty"
                     android:fontFamily="sans-serif-condensed"
-                android:textStyle="bold"
+                    android:textStyle="bold"
                     android:textColor="@color/apple_label"
                     android:textSize="20sp" />
 
