@@ -180,6 +180,11 @@ class BookSlotActivity : AppCompatActivity() {
 
                 val allSlots = generateTimeSlots()
 
+                val todayStr = SimpleDateFormat("d MMM yyyy", Locale.getDefault()).format(Date())
+                val isToday = selectedDate == todayStr
+                val now = Calendar.getInstance()
+                val currentMinutes = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
+
                 currentTimeSlots = allSlots.map { slot ->
                     TimeSlot(
                         time = slot,
@@ -187,6 +192,12 @@ class BookSlotActivity : AppCompatActivity() {
                         isAvailable = !overlapsBusyRange(slot, busyRanges),
                         isSelected = false
                     )
+                }.filter { slot ->
+                    if (!isToday) return@filter true
+                    val slotStartMinutes = parseTimeToMinutes(slot.time) ?: return@filter false
+                    val slotEndMinutes = slotStartMinutes + 30
+                    // Filter out if current time is within 15 mins of end or past end
+                    currentMinutes + 15 <= slotEndMinutes
                 }
 
                 timeSlotAdapter.submitList(currentTimeSlots)
@@ -201,10 +212,16 @@ class BookSlotActivity : AppCompatActivity() {
                     preselectedTime = null
                 }
 
-                if (currentTimeSlots.none { it.isAvailable }) {
+                if (currentTimeSlots.none { it.isAvailable } && currentTimeSlots.isNotEmpty()) {
                     Toast.makeText(
                         this,
                         "No slots available (faculty busy)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (currentTimeSlots.isEmpty()) {
+                    Toast.makeText(
+                        this,
+                        "No more slots available for today",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
